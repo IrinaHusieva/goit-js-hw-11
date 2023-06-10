@@ -1,8 +1,9 @@
+import axios from 'axios';
 const API_KEY = "37182303-6c1ecd301a2c09e566ab94b43";
 export { getImg };
   
   
-async function getImg() {
+async function getImg(searchQuery) {
   const res = await axios.get('https://pixabay.com/api/', {
     params: {
       key: API_KEY,

@@ -2,19 +2,31 @@ import Notiflix from 'notiflix';
 import { getImg } from './api.js';
 
 const form = document.getElementById('search-form');
-const gallery = document.querySelector('.gallery');
+const gallery = document.getElementById('gallery');
 
 form.addEventListener('submit', onSubmit);
 
-function onSubmit (event) {
+async function onSubmit (event) {
     event.preventDefault();
     const searchQuery = form.elements.searchQuery.value;
-    getImg();
+     const res = await getImg(searchQuery);
     const images = res.data.hits;
     if (images.length === 0) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
     }
-console.log(res.data);
+    else {
+    images.forEach(function(image) {
+      const card = document.createElement('div');
+      card.classList.add('gallery');
+  
+      const imageElement = document.createElement('img');
+      imageElement.src = image.webformatURL;
+      imageElement.alt = image.tags;
+  
+      card.appendChild(imageElement);
+      gallery.appendChild(card);
+    });
+  }
 };
 
 
