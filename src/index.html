@@ -8,21 +8,26 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
+    <header class="header-container">
+      <h1 class="search-title"></h1>
+      <form class="search-form" id="search-form">
+        <a href="https://pixabay.com/" target="_blank"> </a>
+        <input
+          class="search-form-input"
+          type="text"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Search images..."
+        />
+        <button class="search-form-button" type="submit">Search</button>
+      </form>
+    </header>
     <main>
-      <div class="style">
-        <form class="search-form" id="search-form">
-          <input
-            type="text"
-            name="searchQuery"
-            autocomplete="off"
-            placeholder="Search images..."
-          />
-          <button type="submit">Search</button>
-        </form>
-        <p id="totalHits"></p>
-      </div>
-      <div id="gallery"></div>
-      <button type="button" class="load-more" id="loadMore">Load more</button>
+      <section class="gallery-section">
+        <div class="gallery"></div>
+
+        <button type="button" class="load-more is-hidden">Load more</button>
+      </section>
     </main>
 
     <script type="module" src="./index.js"></script>

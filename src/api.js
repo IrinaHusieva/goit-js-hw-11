@@ -1,30 +1,35 @@
 
 import axios from 'axios';
-const API_KEY = "37182303-6c1ecd301a2c09e566ab94b43";
-  
-export default class NewsAPIService {
+
+class NewsApiService {
   constructor() {
+    this.searchQuery = '';
     this.page = 1;
-    this.searchValue = "";
+    this.per_page = 40;
   }
-  async getImg(searchQuery) {
-    const res = await axios.get('https://pixabay.com/api/', {
+
+  async fetchGallery() {
+    const axiosOptions = {
+      method: 'get',
+      url: 'https://pixabay.com/api/',
       params: {
-        key: API_KEY,
-        q: searchQuery,
+        key: '37182303-6c1ecd301a2c09e566ab94b43',
+        q: `${this.searchQuery}`,
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
-        per_page: 40,
-        page: 1
-      }
-      
-    })
-    this.incrementPage();
-       return res;
-  }
-  setSearchValue(query) {
-    this.searchValue = query;
+        page: `${this.page}`,
+        per_page: `${this.per_page}`,
+      },
+    };
+    try {
+      const response = await axios(axiosOptions);
+      const data = response.data;
+      this.incrementPage();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   incrementPage() {
@@ -34,7 +39,18 @@ export default class NewsAPIService {
   resetPage() {
     this.page = 1;
   }
+
+  resetEndOfHits() {
+    this.endOfHits = false;
+  }
+
+  get query() {
+    return this.searchQuery;
+  }
+
+  set query(newQuery) {
+    this.searchQuery = newQuery;
+  }
 }
 
-
- 
+export { NewsApiService };
